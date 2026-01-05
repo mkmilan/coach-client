@@ -1,0 +1,190 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.backLink {
+	text-decoration: none;
+	color: var(--muted);
+	font-size: 0.9rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	width: max-content;
+}
+
+.backLink:hover,
+.backLink:focus-visible {
+	color: var(--text);
+}
+
+.headerCard {
+	padding: 22px;
+	display: grid;
+	gap: 12px;
+}
+
+.configGrid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 18px;
+}
+
+@media (max-width: 900px) {
+	.configGrid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.section {
+	padding: 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	color: var(--text);
+}
+
+.sectionHeader h3 {
+	margin: 0;
+	font-size: 1.1rem;
+}
+
+.sectionHeader p {
+	margin: 4px 0 0;
+	color: var(--muted);
+	font-size: 0.9rem;
+}
+
+.pillGroup {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.tileList {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 12px;
+}
+
+.tile {
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 18px;
+	padding: 14px;
+	text-align: left;
+	background: transparent;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+	color: var(--text);
+}
+
+.tile strong {
+	font-size: 1rem;
+}
+
+.tile span {
+	color: var(--muted);
+	font-size: 0.9rem;
+}
+
+.tile:hover,
+.tile:focus-visible {
+	transform: translateY(-1px);
+	border-color: var(--text);
+}
+
+.tileActive {
+	border-color: rgba(255, 255, 255, 0.45);
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.pill {
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 999px;
+	padding: 6px 14px;
+	background: transparent;
+	color: var(--muted);
+	font-size: 0.9rem;
+	cursor: pointer;
+	transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.pillActive {
+	background: rgba(85, 194, 255, 0.2);
+	color: var(--text);
+	border-color: rgba(85, 194, 255, 0.5);
+}
+
+.toggleGrid {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.toggle {
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 14px;
+	padding: 10px 14px;
+	text-align: left;
+	background: transparent;
+	cursor: pointer;
+	font-size: 0.95rem;
+	color: var(--text);
+	transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.toggleActive {
+	border-color: rgba(255, 255, 255, 0.45);
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.summarySection {
+	position: sticky;
+	top: 16px;
+}
+
+@media (max-width: 900px) {
+	.summarySection {
+		position: static;
+	}
+}
+
+.summaryList {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 8px;
+}
+
+.summaryList li {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	font-size: 0.95rem;
+}
+
+.summaryList strong {
+	font-weight: 600;
+}
+
+.summaryList span {
+	color: var(--muted);
+}
+
+.copyStatus {
+	margin: 10px 0 0;
+	font-size: 0.9rem;
+}
+
+.copyStatus[data-state='copied'] {
+	color: var(--success, #198754);
+}
+
+.copyStatus[data-state='error'] {
+	color: var(--danger, #b3261e);
+}

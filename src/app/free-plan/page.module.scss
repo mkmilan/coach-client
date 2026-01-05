@@ -1,0 +1,44 @@
+.goalGrid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+	margin-top: 18px;
+}
+
+@media (max-width: 720px) {
+	.goalGrid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.goalCard {
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 18px;
+	padding: 18px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	background: rgba(255, 255, 255, 0.04);
+	text-decoration: none;
+	color: var(--text);
+	transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.goalCard:hover,
+.goalCard:focus-visible {
+	border-color: rgba(255, 255, 255, 0.4);
+	transform: translateY(-2px);
+}
+
+.goalCard h3 {
+	margin: 4px 0 0;
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.goalCard span {
+	margin-top: 16px;
+	font-size: 0.9rem;
+	color: var(--muted);
+}

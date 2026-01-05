@@ -1,0 +1,19 @@
+{
+  "slug": "threshold-simple-guide",
+  "title": "Threshold training without confusion",
+  "date": "2026-01-02",
+  "tags": [
+    "threshold",
+    "running"
+  ],
+  "excerpt": "What threshold is (in practice), why it matters, and how to progress it safely.",
+  "body": "## Threshold in practice\n\nThreshold is the highest intensity you can hold for a long time **without drifting into a blow-up**.\n\nA good first rule: it should feel **controlled**, not heroic.",
+  "comments": [
+    {
+      "id": "c-thr-1",
+      "author": "Coach",
+      "message": "Use this as a gut-check before every threshold session.",
+      "postedAt": "2026-01-02T13:00:00.000Z"
+    }
+  ]
+}

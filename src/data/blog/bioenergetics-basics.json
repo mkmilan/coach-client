@@ -1,0 +1,19 @@
+{
+  "slug": "bioenergetics-basics",
+  "title": "Bioenergetics for endurance (simple guide)",
+  "date": "2026-01-02",
+  "tags": [
+    "physiology",
+    "basics"
+  ],
+  "excerpt": "A simple model of ATP supply: phosphagen, glycolytic, and oxidative systems — and what that means for training.",
+  "body": "## The only model you need at the start\n\nYou always produce ATP. The question is: **how fast**, and **for how long**.\n\n- **Very fast, very short:** phosphagen system\n- **Fast, short-to-medium:** glycolysis\n- **Slower, long duration:** oxidative system\n\n## Training implication\n\nMost endurance progress is: build aerobic base + add a bit of high intensity carefully.",
+  "comments": [
+    {
+      "id": "c-bio-1",
+      "author": "Coach",
+      "message": "Thanks for digging into the basics!",
+      "postedAt": "2026-01-02T12:00:00.000Z"
+    }
+  ]
+}
