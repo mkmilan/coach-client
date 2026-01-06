@@ -42,8 +42,8 @@ export default async function GoalPlanPage({ params }) {
 				</div>
 				<p>
 					Work through the sliders below to outline a training block you
-					can trust. Once you like the mix, copy the summary and keep it in
-					your notes or share it with your coach.
+					can trust. Once you like the mix, generate a preview (and keep
+					the summary for your notes) to see how it would look in practice.
 				</p>
 			</section>
 

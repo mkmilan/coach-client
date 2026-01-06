@@ -119,27 +119,80 @@
 	border-color: rgba(85, 194, 255, 0.5);
 }
 
-.toggleGrid {
+.switchRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 14px;
+	flex-wrap: wrap;
+}
+
+.switchMeta {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	gap: 4px;
+	flex: 1;
 }
 
-.toggle {
+.switchMeta strong {
+	font-size: 1rem;
+}
+
+.switchMeta span {
+	color: var(--muted);
+	font-size: 0.9rem;
+}
+
+.switchButton {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.12);
-	border-radius: 14px;
-	padding: 10px 14px;
-	text-align: left;
+	border-radius: 999px;
+	padding: 6px 14px 6px 10px;
 	background: transparent;
 	cursor: pointer;
-	font-size: 0.95rem;
-	color: var(--text);
-	transition: border-color 0.2s ease, background 0.2s ease;
+	color: var(--muted);
+	font-size: 0.9rem;
+	transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
-.toggleActive {
-	border-color: rgba(255, 255, 255, 0.45);
-	background: rgba(255, 255, 255, 0.08);
+.switchButtonActive {
+	border-color: rgba(85, 194, 255, 0.5);
+	background: rgba(85, 194, 255, 0.15);
+	color: var(--text);
+}
+
+.switchTrack {
+	width: 40px;
+	height: 22px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.12);
+	position: relative;
+	transition: background 0.2s ease;
+}
+
+.switchButtonActive .switchTrack {
+	background: rgba(255, 255, 255, 0.35);
+}
+
+.switchThumb {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #fff;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	transition: transform 0.2s ease;
+}
+
+.switchButtonActive .switchThumb {
+	transform: translateX(18px);
+}
+
+.switchState {
+	font-weight: 600;
 }
 
 .summarySection {
@@ -176,8 +229,30 @@
 	color: var(--muted);
 }
 
+.summaryActions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+}
+
+.linkButton {
+	border: none;
+	background: transparent;
+	color: var(--muted);
+	cursor: pointer;
+	text-decoration: underline;
+	font-size: 0.95rem;
+	padding: 4px 0;
+}
+
+.linkButton:hover,
+.linkButton:focus-visible {
+	color: var(--text);
+}
+
 .copyStatus {
-	margin: 10px 0 0;
+	margin: 8px 0 0;
 	font-size: 0.9rem;
 }
 

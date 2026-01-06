@@ -1,0 +1,169 @@
+{
+  "run": {
+    "easyMinutes": [
+      30,
+      40,
+      45,
+      50,
+      60
+    ],
+    "longMinutes": [
+      75,
+      85,
+      95,
+      105,
+      115,
+      125,
+      135,
+      145,
+      150
+    ],
+    "thresholdSteps": [
+      {
+        "id": "thr_3x8",
+        "sets": 3,
+        "workMin": 8,
+        "restMin": 2,
+        "label": "3×8'"
+      },
+      {
+        "id": "thr_3x10",
+        "sets": 3,
+        "workMin": 10,
+        "restMin": 2,
+        "label": "3×10'"
+      },
+      {
+        "id": "thr_4x8",
+        "sets": 4,
+        "workMin": 8,
+        "restMin": 2,
+        "label": "4×8'"
+      },
+      {
+        "id": "thr_2x15",
+        "sets": 2,
+        "workMin": 15,
+        "restMin": 3,
+        "label": "2×15'"
+      },
+      {
+        "id": "thr_2x20",
+        "sets": 2,
+        "workMin": 20,
+        "restMin": 3,
+        "label": "2×20'"
+      }
+    ],
+    "vo2Steps": [
+      {
+        "id": "vo2_3x3",
+        "reps": 3,
+        "workMin": 3,
+        "restMin": 3,
+        "label": "3×3'"
+      },
+      {
+        "id": "vo2_4x3",
+        "reps": 4,
+        "workMin": 3,
+        "restMin": 3,
+        "label": "4×3'"
+      },
+      {
+        "id": "vo2_5x3",
+        "reps": 5,
+        "workMin": 3,
+        "restMin": 3,
+        "label": "5×3'"
+      },
+      {
+        "id": "vo2_6x3",
+        "reps": 6,
+        "workMin": 3,
+        "restMin": 3,
+        "label": "6×3'"
+      },
+      {
+        "id": "vo2_5x4",
+        "reps": 5,
+        "workMin": 4,
+        "restMin": 3,
+        "label": "5×4'"
+      },
+      {
+        "id": "vo2_4x5",
+        "reps": 4,
+        "workMin": 5,
+        "restMin": 3,
+        "label": "4×5'"
+      }
+    ]
+  },
+  "bike": {
+    "z2Minutes": [
+      45,
+      60,
+      75,
+      90,
+      120,
+      150,
+      180
+    ],
+    "thresholdSteps": [
+      {
+        "id": "b_thr_3x8",
+        "sets": 3,
+        "workMin": 8,
+        "restMin": 4,
+        "label": "3×8'"
+      },
+      {
+        "id": "b_thr_3x10",
+        "sets": 3,
+        "workMin": 10,
+        "restMin": 4,
+        "label": "3×10'"
+      },
+      {
+        "id": "b_thr_2x15",
+        "sets": 2,
+        "workMin": 15,
+        "restMin": 5,
+        "label": "2×15'"
+      }
+    ]
+  },
+  "swim": {
+    "aerobicMinutes": [
+      30,
+      35,
+      40,
+      45,
+      55
+    ],
+    "intervalSteps": [
+      {
+        "id": "s_10x100",
+        "reps": 10,
+        "work": "100m",
+        "restSec": 20,
+        "label": "10×100m"
+      },
+      {
+        "id": "s_12x100",
+        "reps": 12,
+        "work": "100m",
+        "restSec": 20,
+        "label": "12×100m"
+      },
+      {
+        "id": "s_6x200",
+        "reps": 6,
+        "work": "200m",
+        "restSec": 30,
+        "label": "6×200m"
+      }
+    ]
+  }
+}

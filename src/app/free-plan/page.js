@@ -23,9 +23,8 @@ export default function FreePlanPage() {
 				<ul style={{ color: 'var(--muted)', margin: 0, paddingLeft: 18 }}>
 					<li>Template weeks for each distance</li>
 					<li>Load targets matched to your time or day budget</li>
-					<li>
-						Optional add-ons (bike/swim strength + shift-friendly rules)
-					</li>
+					<li>Shift-friendly mode toggle for rotating schedules</li>
+					<li>Generate a backend preview before saving anything</li>
 				</ul>
 
 				<div className={styles.goalGrid}>

@@ -1,0 +1,107 @@
+{
+  "profiles": {
+    "10k": {
+      "type": "run",
+      "keySlots": {
+        "quality_1": "vo2",
+        "quality_2": "threshold",
+        "long_run": "long",
+        "easy_filler": "easy"
+      }
+    },
+    "half": {
+      "type": "run",
+      "keySlots": {
+        "quality_1": "threshold",
+        "quality_2": "vo2",
+        "long_run": "long",
+        "easy_filler": "easy"
+      }
+    },
+    "marathon": {
+      "type": "run",
+      "keySlots": {
+        "quality_1": "threshold_marathon",
+        "quality_2": "steady_marathon",
+        "long_run": "long",
+        "easy_filler": "easy"
+      }
+    },
+    "70.3": {
+      "type": "tri",
+      "distribution": {
+        "bike": 0.55,
+        "run": 0.25,
+        "swim": 0.20
+      },
+      "triWeek": [
+        {
+          "day": "Mon",
+          "slot": "swim_aerobic"
+        },
+        {
+          "day": "Tue",
+          "slot": "bike_threshold"
+        },
+        {
+          "day": "Wed",
+          "slot": "run_easy"
+        },
+        {
+          "day": "Thu",
+          "slot": "swim_intervals"
+        },
+        {
+          "day": "Fri",
+          "slot": "bike_z2"
+        },
+        {
+          "day": "Sat",
+          "slot": "run_long"
+        },
+        {
+          "day": "Sun",
+          "slot": "bike_long"
+        }
+      ]
+    },
+    "ironman": {
+      "type": "tri",
+      "distribution": {
+        "bike": 0.60,
+        "run": 0.20,
+        "swim": 0.20
+      },
+      "triWeek": [
+        {
+          "day": "Mon",
+          "slot": "swim_aerobic"
+        },
+        {
+          "day": "Tue",
+          "slot": "bike_threshold"
+        },
+        {
+          "day": "Wed",
+          "slot": "run_easy"
+        },
+        {
+          "day": "Thu",
+          "slot": "swim_intervals"
+        },
+        {
+          "day": "Fri",
+          "slot": "bike_z2"
+        },
+        {
+          "day": "Sat",
+          "slot": "bike_long"
+        },
+        {
+          "day": "Sun",
+          "slot": "run_long"
+        }
+      ]
+    }
+  }
+}

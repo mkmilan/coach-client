@@ -1,66 +1,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
-
-const HOUR_WINDOWS = [
-	{
-		value: '4-6',
-		label: '4–6h',
-		description:
-			'Two key sessions + two easy fillers. Sustainable base building.',
-	},
-	{
-		value: '6-8',
-		label: '6–8h',
-		description: 'Add one more quality slot and extend the weekend long run.',
-	},
-	{
-		value: '8-10',
-		label: '8–10h',
-		description:
-			'Full spectrum: intensity, strength endurance, and long aerobic days.',
-	},
-	{
-		value: '10-12',
-		label: '10–12h',
-		description: 'High-volume focus. Doubles + cross-training ready.',
-	},
-];
-
-const WEEK_STRUCTURES = [
-	{
-		value: '3-key-2-easy',
-		label: '3 key + 2 easy',
-		description:
-			'Tuesday/Thursday quality + weekend long run, with two easy floaters.',
-	},
-	{
-		value: '2-quality-long',
-		label: '2 quality + long',
-		description:
-			'One threshold, one speed, long run focus. Lighter weekly stress.',
-	},
-	{
-		value: 'consistency',
-		label: 'Low freq / high consistency',
-		description:
-			'Shorter daily work, optional doubles, blends endurance + strength.',
-	},
-];
-
-const EXPERIENCE_LEVELS = [
-	{ value: 'new', label: 'New' },
-	{ value: 'intermediate', label: 'Intermediate' },
-	{ value: 'advanced', label: 'Advanced' },
-];
-
-const BLOCK_LENGTHS = [8, 12, 16];
-
-const EXTRAS = [
-	{ value: 'bikeStrength', label: 'Bike / swim strength focus' },
-	{ value: 'shiftMode', label: 'Shift-work mode' },
-];
+import {
+	HOUR_WINDOWS,
+	WEEK_STRUCTURES,
+	EXPERIENCE_LEVELS,
+	BLOCK_LENGTHS,
+} from '@/data/freePlanOptions';
 
 function PillGroup({ options, value, onChange }) {
 	return (
@@ -112,11 +60,12 @@ function OptionTiles({ options, value, onChange }) {
 }
 
 export default function Configurator({ goal }) {
+	const router = useRouter();
 	const [hoursWindow, setHoursWindow] = useState(HOUR_WINDOWS[1].value);
 	const [structure, setStructure] = useState(WEEK_STRUCTURES[0].value);
 	const [experience, setExperience] = useState(EXPERIENCE_LEVELS[1].value);
 	const [blockLength, setBlockLength] = useState(BLOCK_LENGTHS[1]);
-	const [extras, setExtras] = useState(() => new Set());
+	const [shiftMode, setShiftMode] = useState(false);
 	const [copyState, setCopyState] = useState('idle');
 
 	const hoursOption = HOUR_WINDOWS.find((opt) => opt.value === hoursWindow);
@@ -126,37 +75,33 @@ export default function Configurator({ goal }) {
 	const hoursLabel = hoursOption?.label || '';
 	const structureLabel = structureOption?.label || '';
 
-	const extrasList = EXTRAS.filter((extra) => extras.has(extra.value)).map(
-		(extra) => extra.label
-	);
-
 	const summary = useMemo(() => {
-		return `Goal: ${
-			goal.label
-		}\nHours/week: ${hoursLabel}\nStructure: ${structureLabel}\nExperience: ${
-			experience.charAt(0).toUpperCase() + experience.slice(1)
-		}\nBlock length: ${blockLength} weeks\nExtras: ${
-			extrasList.length ? extrasList.join(', ') : 'None'
-		}`;
+		return `Goal: ${goal.label}
+Hours/week: ${hoursLabel}
+Structure: ${structureLabel}
+Experience: ${experience.charAt(0).toUpperCase() + experience.slice(1)}
+Block length: ${blockLength} weeks
+Shift-work mode: ${shiftMode ? 'On' : 'Off'}`;
 	}, [
 		goal.label,
 		hoursLabel,
 		structureLabel,
 		experience,
 		blockLength,
-		extrasList,
+		shiftMode,
 	]);
 
-	function toggleExtra(value) {
-		setExtras((prev) => {
-			const next = new Set(prev);
-			if (next.has(value)) {
-				next.delete(value);
-			} else {
-				next.add(value);
-			}
-			return next;
+	function handleGeneratePlan() {
+		if (!goal?.slug) return;
+		const params = new URLSearchParams({
+			goal: goal.slug,
+			hours: hoursWindow,
+			structure,
+			experience,
+			blockLength: String(blockLength),
+			shiftMode: shiftMode ? 'true' : 'false',
 		});
+		router.push(`/plans/preview?${params.toString()}`);
 	}
 
 	async function copySummary() {
@@ -226,33 +171,42 @@ export default function Configurator({ goal }) {
 			<section className={`card ${styles.section}`}>
 				<div className={styles.sectionHeader}>
 					<h3>Extras</h3>
-					<p>Layer supporting focus areas if needed.</p>
+					<p>Toggle shift-friendly spacing for rotating schedules.</p>
 				</div>
-				<div className={styles.toggleGrid}>
-					{EXTRAS.map((extra) => {
-						const isActive = extras.has(extra.value);
-						return (
-							<button
-								key={extra.value}
-								type="button"
-								className={
-									isActive
-										? `${styles.toggle} ${styles.toggleActive}`
-										: styles.toggle
-								}
-								onClick={() => toggleExtra(extra.value)}
-							>
-								{extra.label}
-							</button>
-						);
-					})}
+				<div className={styles.switchRow}>
+					<div className={styles.switchMeta}>
+						<strong>Shift-work mode</strong>
+						<span>
+							Reflows key days for nights, doubles, or swing shifts.
+						</span>
+					</div>
+					<button
+						type="button"
+						role="switch"
+						aria-checked={shiftMode}
+						className={
+							shiftMode
+								? `${styles.switchButton} ${styles.switchButtonActive}`
+								: styles.switchButton
+						}
+						onClick={() => setShiftMode((prev) => !prev)}
+					>
+						<span className={styles.switchTrack}>
+							<span className={styles.switchThumb} />
+						</span>
+						<span className={styles.switchState}>
+							{shiftMode ? 'On' : 'Off'}
+						</span>
+					</button>
 				</div>
 			</section>
 
 			<section className={`card ${styles.section} ${styles.summarySection}`}>
 				<div className={styles.sectionHeader}>
 					<h3>Plan summary</h3>
-					<p>Save this snapshot or copy it for your notes.</p>
+					<p>
+						Review your picks, then generate a preview or keep the text.
+					</p>
 				</div>
 				<ul className={styles.summaryList}>
 					<li>
@@ -278,23 +232,20 @@ export default function Configurator({ goal }) {
 						<span>{blockLength} weeks</span>
 					</li>
 					<li>
-						<strong>Extras</strong>
-						<span>
-							{extrasList.length ? extrasList.join(', ') : 'None'}
-						</span>
+						<strong>Shift-work mode</strong>
+						<span>{shiftMode ? 'On' : 'Off'}</span>
 					</li>
 				</ul>
 
-				<button type="button" className="btn" onClick={copySummary}>
-					Copy summary
-				</button>
-				{copyState !== 'idle' && (
-					<p className={styles.copyStatus} data-state={copyState}>
-						{copyState === 'copied'
-							? 'Copied to clipboard.'
-							: 'Clipboard not available.'}
-					</p>
-				)}
+				<div className={styles.summaryActions}>
+					<button
+						type="button"
+						className="btn"
+						onClick={handleGeneratePlan}
+					>
+						Generate plan
+					</button>
+				</div>
 			</section>
 		</div>
 	);
