@@ -110,6 +110,15 @@
       150,
       180
     ],
+    "longMinutes": [
+      90,
+      120,
+      150,
+      180,
+      210,
+      240,
+      270
+    ],
     "thresholdSteps": [
       {
         "id": "b_thr_3x8",
@@ -119,6 +128,13 @@
         "label": "3×8'"
       },
       {
+        "id": "b_thr_2x10",
+        "sets": 2,
+        "workMin": 10,
+        "restMin": 4,
+        "label": "2×10'"
+      },
+      {
         "id": "b_thr_3x10",
         "sets": 3,
         "workMin": 10,
@@ -126,11 +142,32 @@
         "label": "3×10'"
       },
       {
+        "id": "b_thr_3x12",
+        "sets": 3,
+        "workMin": 12,
+        "restMin": 4,
+        "label": "3×12'"
+      },
+      {
         "id": "b_thr_2x15",
         "sets": 2,
         "workMin": 15,
         "restMin": 5,
         "label": "2×15'"
+      },
+      {
+        "id": "b_thr_3x15",
+        "sets": 3,
+        "workMin": 15,
+        "restMin": 5,
+        "label": "3×15'"
+      },
+      {
+        "id": "b_thr_2x20",
+        "sets": 2,
+        "workMin": 20,
+        "restMin": 5,
+        "label": "2×20'"
       }
     ]
   },

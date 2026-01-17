@@ -1,0 +1,116 @@
+{
+  "structures": [
+    {
+      "id": "s_3key_2easy",
+      "name": "3 days / week",
+      "description": "Quality + easy + long run. Minimal dose, high consistency.",
+      "daysPerWeekLabel": "3",
+      "pattern": [
+        {
+          "day": "Tue",
+          "slot": "quality_1"
+        },
+        {
+          "day": "Thu",
+          "slot": "easy_1"
+        },
+        {
+          "day": "Sun",
+          "slot": "long_run"
+        }
+      ]
+    },
+    {
+      "id": "s_2quality_long",
+      "name": "4 days / week",
+      "description": "Two key sessions + long run + one easy filler.",
+      "daysPerWeekLabel": "4",
+      "pattern": [
+        {
+          "day": "Tue",
+          "slot": "quality_1"
+        },
+        {
+          "day": "Thu",
+          "slot": "quality_2"
+        },
+        {
+          "day": "Sat",
+          "slot": "easy_1"
+        },
+        {
+          "day": "Sun",
+          "slot": "long_run"
+        }
+      ]
+    },
+    {
+      "id": "s_lowfreq_consistency",
+      "name": "5–6 days / week",
+      "description": "Two key sessions + long run + easy volume. Includes an optional 6th day.",
+      "daysPerWeekLabel": "5–6",
+      "pattern": [
+        {
+          "day": "Mon",
+          "slot": "easy_1"
+        },
+        {
+          "day": "Tue",
+          "slot": "quality_1"
+        },
+        {
+          "day": "Wed",
+          "slot": "easy_optional"
+        },
+        {
+          "day": "Thu",
+          "slot": "quality_2"
+        },
+        {
+          "day": "Sat",
+          "slot": "easy_2"
+        },
+        {
+          "day": "Sun",
+          "slot": "long_run"
+        }
+      ]
+    },
+    {
+      "id": "s_highfreq_ironman",
+      "name": "5–7 days / week",
+      "description": "High-frequency week with optional doubles. Designed for Ironman volume.",
+      "daysPerWeekLabel": "5–7",
+      "pattern": [
+        {
+          "day": "Mon",
+          "slot": "easy_1"
+        },
+        {
+          "day": "Tue",
+          "slot": "quality_1"
+        },
+        {
+          "day": "Wed",
+          "slot": "easy_optional"
+        },
+        {
+          "day": "Thu",
+          "slot": "quality_2"
+        },
+        {
+          "day": "Fri",
+          "slot": "easy_2"
+        },
+        {
+          "day": "Sat",
+          "slot": "easy_optional"
+        },
+        {
+          "day": "Sun",
+          "slot": "long_run"
+        }
+      ]
+    }
+  ]
+}

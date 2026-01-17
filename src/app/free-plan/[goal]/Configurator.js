@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
 import {
@@ -9,6 +9,7 @@ import {
 	EXPERIENCE_LEVELS,
 	BLOCK_LENGTHS,
 } from '@/data/freePlanOptions';
+import goalProfilesData from '@/data/plans/goalProfiles.json';
 
 function PillGroup({ options, value, onChange }) {
 	return (
@@ -62,14 +63,71 @@ function OptionTiles({ options, value, onChange }) {
 export default function Configurator({ goal }) {
 	const router = useRouter();
 	const [hoursWindow, setHoursWindow] = useState(HOUR_WINDOWS[1].value);
-	const [structure, setStructure] = useState(WEEK_STRUCTURES[0].value);
 	const [experience, setExperience] = useState(EXPERIENCE_LEVELS[1].value);
 	const [blockLength, setBlockLength] = useState(BLOCK_LENGTHS[1]);
 	const [shiftMode, setShiftMode] = useState(false);
 	const [copyState, setCopyState] = useState('idle');
 
+	const hoursOrder = useMemo(
+		() => ['h_4_6', 'h_6_8', 'h_8_10', 'h_10_12'],
+		[]
+	);
+	const hoursToBucketId = useMemo(
+		() =>
+			HOUR_WINDOWS.reduce((acc, opt) => {
+				acc[opt.value] = `h_${opt.value.replace('-', '_')}`;
+				return acc;
+			}, {}),
+		[]
+	);
+	const bucketToValue = useMemo(
+		() =>
+			HOUR_WINDOWS.reduce((acc, opt) => {
+				acc[`h_${opt.value.replace('-', '_')}`] = opt.value;
+				return acc;
+			}, {}),
+		[]
+	);
+
+	const structureOptions = useMemo(() => {
+		const goalProfile = goalProfilesData?.profiles?.[goal?.planId];
+		const allowed = goalProfile?.constraints?.allowedStructures;
+		if (!allowed?.length) return WEEK_STRUCTURES;
+		return WEEK_STRUCTURES.filter((opt) => allowed.includes(opt.value));
+	}, [goal?.planId]);
+
+	const [structure, setStructure] = useState(
+		structureOptions[0]?.value || WEEK_STRUCTURES[0].value
+	);
+
+	const hourOptions = useMemo(() => {
+		const goalProfile = goalProfilesData?.profiles?.[goal?.planId];
+		const cap = goalProfile?.constraints?.hoursCapByStructure?.[structure];
+		if (!cap) return HOUR_WINDOWS;
+		const capIdx = hoursOrder.indexOf(cap);
+		if (capIdx === -1) return HOUR_WINDOWS;
+		return HOUR_WINDOWS.filter(
+			(opt) => hoursOrder.indexOf(hoursToBucketId[opt.value]) <= capIdx
+		);
+	}, [goal?.planId, structure, hoursOrder, hoursToBucketId]);
+
+	useEffect(() => {
+		if (!structureOptions.length) return;
+		if (!structureOptions.find((opt) => opt.value === structure)) {
+			setStructure(structureOptions[0].value);
+		}
+	}, [structure, structureOptions]);
+
+	useEffect(() => {
+		if (!hourOptions.length) return;
+		if (!hourOptions.find((opt) => opt.value === hoursWindow)) {
+			const fallback = bucketToValue[hoursOrder[0]] || hourOptions[0].value;
+			setHoursWindow(fallback);
+		}
+	}, [bucketToValue, hourOptions, hoursOrder, hoursWindow]);
+
 	const hoursOption = HOUR_WINDOWS.find((opt) => opt.value === hoursWindow);
-	const structureOption = WEEK_STRUCTURES.find(
+	const structureOption = structureOptions.find(
 		(opt) => opt.value === structure
 	);
 	const hoursLabel = hoursOption?.label || '';
@@ -123,7 +181,7 @@ Shift-work mode: ${shiftMode ? 'On' : 'Off'}`;
 					<p>Lead with time first. Pick the load that fits real life.</p>
 				</div>
 				<OptionTiles
-					options={HOUR_WINDOWS}
+					options={hourOptions}
 					value={hoursWindow}
 					onChange={setHoursWindow}
 				/>
@@ -135,7 +193,7 @@ Shift-work mode: ${shiftMode ? 'On' : 'Off'}`;
 					<p>Use patterns to understand how the week actually flows.</p>
 				</div>
 				<OptionTiles
-					options={WEEK_STRUCTURES}
+					options={structureOptions}
 					value={structure}
 					onChange={setStructure}
 				/>

@@ -1,0 +1,54 @@
+{
+  "profiles": {
+    "70.3": {
+      "phaseSplits": {
+        "8": { "base": 2, "build": 3, "specificity": 2, "taper": 1 },
+        "12": { "base": 3, "build": 4, "specificity": 3, "taper": 2 },
+        "16": { "base": 4, "build": 5, "specificity": 4, "taper": 3 }
+      },
+      "volumeTargets": {
+        "h_4_6": 300,
+        "h_6_8": 420,
+        "h_8_10": 540,
+        "h_10_12": 660
+      },
+      "caps": {
+        "runLongByExperience": {
+          "new": 75,
+          "intermediate": 95,
+          "advanced": 105
+        },
+        "bikeLongByExperience": {
+          "new": 150,
+          "intermediate": 180,
+          "advanced": 210
+        }
+      }
+    },
+    "ironman": {
+      "phaseSplits": {
+        "8": { "base": 2, "build": 3, "specificity": 2, "taper": 1 },
+        "12": { "base": 3, "build": 4, "specificity": 3, "taper": 2 },
+        "16": { "base": 4, "build": 5, "specificity": 4, "taper": 3 }
+      },
+      "volumeTargets": {
+        "h_4_6": 300,
+        "h_6_8": 420,
+        "h_8_10": 540,
+        "h_10_12": 660
+      },
+      "caps": {
+        "runLongByExperience": {
+          "new": 90,
+          "intermediate": 110,
+          "advanced": 120
+        },
+        "bikeLongByExperience": {
+          "new": 180,
+          "intermediate": 210,
+          "advanced": 240
+        }
+      }
+    }
+  }
+}

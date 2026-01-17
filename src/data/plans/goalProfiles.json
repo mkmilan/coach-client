@@ -2,6 +2,20 @@
   "profiles": {
     "10k": {
       "type": "run",
+      "constraints": {
+        "minDays": 3,
+        "maxDays": 6,
+        "allowedStructures": [
+          "s_3key_2easy",
+          "s_2quality_long",
+          "s_lowfreq_consistency"
+        ],
+        "hoursCapByStructure": {
+          "s_3key_2easy": "h_6_8",
+          "s_2quality_long": "h_8_10",
+          "s_lowfreq_consistency": "h_10_12"
+        }
+      },
       "keySlots": {
         "quality_1": "vo2",
         "quality_2": "threshold",
@@ -11,6 +25,20 @@
     },
     "half": {
       "type": "run",
+      "constraints": {
+        "minDays": 3,
+        "maxDays": 6,
+        "allowedStructures": [
+          "s_3key_2easy",
+          "s_2quality_long",
+          "s_lowfreq_consistency"
+        ],
+        "hoursCapByStructure": {
+          "s_3key_2easy": "h_6_8",
+          "s_2quality_long": "h_8_10",
+          "s_lowfreq_consistency": "h_10_12"
+        }
+      },
       "keySlots": {
         "quality_1": "threshold",
         "quality_2": "vo2",
@@ -20,6 +48,20 @@
     },
     "marathon": {
       "type": "run",
+      "constraints": {
+        "minDays": 3,
+        "maxDays": 6,
+        "allowedStructures": [
+          "s_3key_2easy",
+          "s_2quality_long",
+          "s_lowfreq_consistency"
+        ],
+        "hoursCapByStructure": {
+          "s_3key_2easy": "h_6_8",
+          "s_2quality_long": "h_8_10",
+          "s_lowfreq_consistency": "h_10_12"
+        }
+      },
       "keySlots": {
         "quality_1": "threshold_marathon",
         "quality_2": "steady_marathon",
@@ -29,6 +71,19 @@
     },
     "70.3": {
       "type": "tri",
+      "constraints": {
+        "minDays": 4,
+        "maxDays": 6,
+        "allowedStructures": [
+          "s_2quality_long",
+          "s_lowfreq_consistency"
+        ],
+        "requiresDoubles": true,
+        "hoursCapByStructure": {
+          "s_2quality_long": "h_8_10",
+          "s_lowfreq_consistency": "h_10_12"
+        }
+      },
       "distribution": {
         "bike": 0.55,
         "run": 0.25,
@@ -37,36 +92,98 @@
       "triWeek": [
         {
           "day": "Mon",
-          "slot": "swim_aerobic"
+          "sessions": [
+            {
+              "slot": "swim_aerobic",
+              "timeOfDay": "am"
+            },
+            {
+              "slot": "bike_z2",
+              "timeOfDay": "pm"
+            }
+          ]
         },
         {
           "day": "Tue",
-          "slot": "bike_threshold"
+          "sessions": [
+            {
+              "slot": "bike_threshold",
+              "timeOfDay": "am"
+            },
+            {
+              "slot": "run_easy",
+              "timeOfDay": "pm"
+            }
+          ]
         },
         {
           "day": "Wed",
-          "slot": "run_easy"
+          "sessions": [
+            {
+              "slot": "swim_intervals",
+              "timeOfDay": "am"
+            }
+          ]
         },
         {
           "day": "Thu",
-          "slot": "swim_intervals"
+          "sessions": [
+            {
+              "slot": "bike_z2",
+              "timeOfDay": "am"
+            },
+            {
+              "slot": "run_threshold",
+              "timeOfDay": "pm"
+            }
+          ]
         },
         {
           "day": "Fri",
-          "slot": "bike_z2"
+          "sessions": [
+            {
+              "slot": "swim_aerobic",
+              "timeOfDay": "am"
+            }
+          ]
         },
         {
           "day": "Sat",
-          "slot": "run_long"
+          "sessions": [
+            {
+              "slot": "bike_long",
+              "timeOfDay": "am"
+            },
+            {
+              "slot": "run_brick",
+              "timeOfDay": "pm"
+            }
+          ]
         },
         {
           "day": "Sun",
-          "slot": "bike_long"
+          "sessions": [
+            {
+              "slot": "run_long",
+              "timeOfDay": "am"
+            }
+          ]
         }
       ]
     },
     "ironman": {
       "type": "tri",
+      "constraints": {
+        "minDays": 5,
+        "maxDays": 7,
+        "allowedStructures": [
+          "s_highfreq_ironman"
+        ],
+        "requiresDoubles": true,
+        "hoursCapByStructure": {
+          "s_highfreq_ironman": "h_10_12"
+        }
+      },
       "distribution": {
         "bike": 0.60,
         "run": 0.20,
@@ -75,31 +192,86 @@
       "triWeek": [
         {
           "day": "Mon",
-          "slot": "swim_aerobic"
+          "sessions": [
+            {
+              "slot": "swim_aerobic",
+              "timeOfDay": "am"
+            },
+            {
+              "slot": "bike_z2",
+              "timeOfDay": "pm"
+            }
+          ]
         },
         {
           "day": "Tue",
-          "slot": "bike_threshold"
+          "sessions": [
+            {
+              "slot": "bike_threshold",
+              "timeOfDay": "am"
+            },
+            {
+              "slot": "run_easy",
+              "timeOfDay": "pm"
+            }
+          ]
         },
         {
           "day": "Wed",
-          "slot": "run_easy"
+          "sessions": [
+            {
+              "slot": "swim_intervals",
+              "timeOfDay": "am"
+            },
+            {
+              "slot": "run_easy",
+              "timeOfDay": "pm"
+            }
+          ]
         },
         {
           "day": "Thu",
-          "slot": "swim_intervals"
+          "sessions": [
+            {
+              "slot": "bike_z2",
+              "timeOfDay": "am"
+            },
+            {
+              "slot": "run_threshold",
+              "timeOfDay": "pm"
+            }
+          ]
         },
         {
           "day": "Fri",
-          "slot": "bike_z2"
+          "sessions": [
+            {
+              "slot": "swim_aerobic",
+              "timeOfDay": "am"
+            }
+          ]
         },
         {
           "day": "Sat",
-          "slot": "bike_long"
+          "sessions": [
+            {
+              "slot": "bike_long",
+              "timeOfDay": "am"
+            },
+            {
+              "slot": "run_brick",
+              "timeOfDay": "pm"
+            }
+          ]
         },
         {
           "day": "Sun",
-          "slot": "run_long"
+          "sessions": [
+            {
+              "slot": "run_long",
+              "timeOfDay": "am"
+            }
+          ]
         }
       ]
     }

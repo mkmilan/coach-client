@@ -1,110 +1,133 @@
-import styles from './PlanRenderer.module.scss';
+import styles from "./PlanRenderer.module.scss";
 
-const DAY_ORDER = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const DETAIL_LABELS = {
-	sets: 'Sets',
-	reps: 'Reps',
-	workMin: 'Work',
-	restMin: 'Rest',
-	workSec: 'Work',
-	restSec: 'Rest',
-};
+const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+function normalizeDays(days) {
+	return (days || []).map((d) => {
+		if (Array.isArray(d.sessions)) return d;
+		if (d.workout) {
+			return {
+				...d,
+				sessions: [
+					{
+						...d.workout,
+						timeOfDay: d.timeOfDay || "",
+					},
+				],
+			};
+		}
+		return { ...d, sessions: [] };
+	});
+}
 
 function sortDays(days) {
-	const map = new Map(days.map((d) => [d.day, d]));
+	const normalized = normalizeDays(days);
+	const map = new Map(normalized.map((d) => [d.day, d]));
 	return DAY_ORDER.map((day) => map.get(day)).filter(Boolean);
 }
 
-function humanizeLabel(key) {
-	if (DETAIL_LABELS[key]) return DETAIL_LABELS[key];
-	return key
-		.replace(/([A-Z])/g, ' $1')
-		.replace(/^./, (char) => char.toUpperCase());
-}
-
-function formatDetailValue(key, value) {
-	if (value === undefined || value === null) return null;
-	const lower = key.toLowerCase();
-	if (typeof value === 'number') {
-		if (lower.includes('min')) return `${value} min`;
-		if (lower.includes('sec')) return `${value} sec`;
+function formatWorkoutDetails(details) {
+	if (!details || typeof details !== "object") return "";
+	const parts = [];
+	const { sets, reps, workMin, restMin, work, restSec } = details;
+	if (sets != null) {
+		const count = Number(sets);
+		if (!Number.isNaN(count)) parts.push(`${count} ${count === 1 ? "set" : "sets"}`);
 	}
-	return value;
+	if (reps != null) {
+		const count = Number(reps);
+		if (!Number.isNaN(count)) parts.push(`${count} ${count === 1 ? "rep" : "reps"}`);
+	}
+	if (workMin != null) {
+		const minutes = Number(workMin);
+		if (!Number.isNaN(minutes)) parts.push(`${minutes} min on`);
+	}
+	if (work != null) {
+		parts.push(`${work} on`);
+	}
+	if (restMin != null) {
+		const minutes = Number(restMin);
+		if (!Number.isNaN(minutes)) parts.push(`${minutes} min easy`);
+	}
+	if (restSec != null) {
+		const seconds = Number(restSec);
+		if (!Number.isNaN(seconds)) parts.push(`${seconds}s easy`);
+	}
+	return parts.join(" · ");
 }
 
-function buildDetailEntries(details) {
-	if (!details || typeof details !== 'object') return null;
-	const entries = [];
-	Object.entries(details).forEach(([key, value]) => {
-		if (value === undefined || value === null || value === '') return;
-		if (typeof value === 'object') return;
-		const formattedValue = formatDetailValue(key, value);
-		if (formattedValue === null) return;
-		entries.push({
-			label: humanizeLabel(key),
-			value: formattedValue,
-			id: `${key}-${value}`,
-		});
-	});
-	return entries.length ? entries : null;
+function phaseLabel(phase) {
+	if (phase === "race_week") return "Race week";
+	if (phase === "taper") return "Taper";
+	return null;
 }
 
 export default function PlanRenderer({ plan }) {
 	return (
 		<div className={styles.wrap}>
-			{plan.weeks.map((w) => (
-				<div key={w.week} className={`card ${styles.week}`}>
-					<div className={styles.weekHeader}>
-						<div>
-							<div className={styles.weekTitle}>
-								Week {w.week}{' '}
-								{w.isDeload ? (
-									<span className={styles.deload}>Deload</span>
-								) : null}
+			{plan.warnings?.length ? (
+				<div className={`card ${styles.warningBox}`}>
+					<b>Notes</b>
+					<ul className={styles.warningList}>
+						{plan.warnings.map((w) => (
+							<li key={w}>{w}</li>
+						))}
+					</ul>
+				</div>
+			) : null}
+
+			{plan.weeks.map((w) => {
+				const label = phaseLabel(w.phase);
+
+				return (
+					<div key={w.week} className={`card ${styles.week}`}>
+						<div className={styles.weekHeader}>
+							<div>
+								<div className={styles.weekTitle}>
+									Week {w.week}
+									{label ? <span className={styles.phase}>{label}</span> : null}
+									{w.isDeload && w.phase !== "race_week" ? <span className={styles.deload}>Deload</span> : null}
+								</div>
+								<div className="small">Mon–Sun schedule</div>
 							</div>
-							<div className="small">Mon–Sun schedule</div>
+						</div>
+
+						<div className={styles.grid}>
+							{sortDays(w.days).map((d) => {
+								const hasMultiple = d.sessions.length > 1;
+
+								return (
+									<div key={d.day} className={`card ${styles.day} ${d.isKey ? styles.key : ""}`}>
+										<div className={styles.dayTop}>
+											<b>{d.day}</b>
+											<span className="small">{hasMultiple ? "MULTI" : (d.sessions[0]?.sport || "").toUpperCase()}</span>
+										</div>
+
+										{d.sessions.map((s, idx) => {
+											const detailText = formatWorkoutDetails(s.details);
+											const timeTag = s.timeOfDay ? `${s.timeOfDay.toUpperCase()} · ` : "";
+											return (
+												<div key={`${d.day}-${idx}`} style={{ marginTop: idx === 0 ? 0 : 10 }}>
+													<div className={styles.title}>{timeTag}{s.title}</div>
+													<div className="small">
+														{s.minutes == null ? "—" : `${s.minutes} min`} · {s.intensity}
+													</div>
+													{detailText ? (
+														<div className="small" style={{ marginTop: 6 }}>
+															{detailText}
+														</div>
+													) : null}
+													<p className={styles.notes}>{s.notes}</p>
+												</div>
+											);
+										})}
+									</div>
+								);
+							})}
 						</div>
 					</div>
-
-					<div className={styles.grid}>
-						{sortDays(w.days).map((d) => {
-							const detailEntries = buildDetailEntries(
-								d.workout.details
-							);
-							return (
-								<div
-									key={d.day}
-									className={`card ${styles.day} ${
-										d.isKey ? styles.key : ''
-									}`}
-								>
-									<div className={styles.dayTop}>
-										<b>{d.day}</b>
-										<span className="small">
-											{d.workout.sport.toUpperCase()}
-										</span>
-									</div>
-									<div className={styles.title}>{d.workout.title}</div>
-									<div className="small">
-										{d.workout.minutes} min · {d.workout.intensity}
-									</div>
-									{detailEntries ? (
-										<ul className={styles.detailList}>
-											{detailEntries.map((detail) => (
-												<li key={detail.id}>
-													<strong>{detail.label}</strong>
-													<span>{detail.value}</span>
-												</li>
-											))}
-										</ul>
-									) : null}
-									<p className={styles.notes}>{d.workout.notes}</p>
-								</div>
-							);
-						})}
-					</div>
-				</div>
-			))}
+				);
+			})}
 		</div>
 	);
 }

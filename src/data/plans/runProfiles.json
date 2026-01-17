@@ -1,0 +1,156 @@
+{
+  "profiles": {
+    "10k": {
+      "phaseSplits": {
+        "8": { "base": 2, "build": 3, "specificity": 2, "taper": 1 },
+        "12": { "base": 3, "build": 4, "specificity": 3, "taper": 2 },
+        "16": { "base": 4, "build": 5, "specificity": 4, "taper": 3 }
+      },
+      "volumeTargets": {
+        "h_4_6": 270,
+        "h_6_8": 390,
+        "h_8_10": 510,
+        "h_10_12": 630
+      },
+      "newRunnerBaseWeeks": {
+        "8": 1,
+        "12": 2,
+        "16": 3
+      },
+      "longRun": {
+        "startByBucket": {
+          "h_4_6": 45,
+          "h_6_8": 60,
+          "h_8_10": 70,
+          "h_10_12": 80
+        },
+        "startAdjustByExperience": {
+          "new": -10,
+          "intermediate": 0,
+          "advanced": 5
+        },
+        "weeklyIncrease": 5,
+        "capByExperience": {
+          "new": 75,
+          "intermediate": 90,
+          "advanced": 90
+        }
+      },
+      "qualityByPhase": {
+        "base": { "q1": "threshold", "q2": "speed" },
+        "build": { "q1": "vo2", "q2": "threshold" },
+        "specificity": { "q1": "vo2", "q2": "threshold" },
+        "taper": { "q1": "threshold", "q2": "speed" }
+      },
+      "qualityByPhaseNew": {
+        "base": { "q1": "easy", "q2": "speed" },
+        "build": { "q1": "threshold", "q2": "speed" },
+        "specificity": { "q1": "threshold", "q2": "speed" },
+        "taper": { "q1": "threshold", "q2": "speed" }
+      }
+    },
+    "half": {
+      "phaseSplits": {
+        "8": { "base": 2, "build": 3, "specificity": 2, "taper": 1 },
+        "12": { "base": 3, "build": 4, "specificity": 3, "taper": 2 },
+        "16": { "base": 4, "build": 5, "specificity": 4, "taper": 3 }
+      },
+      "volumeTargets": {
+        "h_4_6": 300,
+        "h_6_8": 420,
+        "h_8_10": 540,
+        "h_10_12": 660
+      },
+      "newRunnerBaseWeeks": {
+        "8": 1,
+        "12": 2,
+        "16": 3
+      },
+      "longRun": {
+        "startByBucket": {
+          "h_4_6": 55,
+          "h_6_8": 70,
+          "h_8_10": 80,
+          "h_10_12": 90
+        },
+        "startAdjustByExperience": {
+          "new": -10,
+          "intermediate": 0,
+          "advanced": 5
+        },
+        "weeklyIncrease": 5,
+        "capByExperience": {
+          "new": 95,
+          "intermediate": 120,
+          "advanced": 120
+        }
+      },
+      "qualityByPhase": {
+        "base": { "q1": "threshold", "q2": "speed" },
+        "build": { "q1": "threshold", "q2": ["vo2", "speed"] },
+        "specificity": { "q1": "threshold", "q2": "vo2" },
+        "taper": { "q1": "threshold", "q2": "speed" }
+      },
+      "qualityByPhaseNew": {
+        "base": { "q1": "easy", "q2": "speed" },
+        "build": { "q1": "threshold", "q2": "speed" },
+        "specificity": { "q1": "threshold", "q2": "speed" },
+        "taper": { "q1": "threshold", "q2": "speed" }
+      }
+    },
+    "marathon": {
+      "phaseSplits": {
+        "8": { "base": 2, "build": 3, "specificity": 2, "taper": 1 },
+        "12": { "base": 3, "build": 4, "specificity": 3, "taper": 2 },
+        "16": { "base": 4, "build": 5, "specificity": 4, "taper": 3 }
+      },
+      "volumeTargets": {
+        "h_4_6": 330,
+        "h_6_8": 450,
+        "h_8_10": 570,
+        "h_10_12": 690
+      },
+      "newRunnerBaseWeeks": {
+        "8": 1,
+        "12": 2,
+        "16": 3
+      },
+      "longRun": {
+        "startByBucket": {
+          "h_4_6": 60,
+          "h_6_8": 75,
+          "h_8_10": 90,
+          "h_10_12": 100
+        },
+        "startAdjustByExperience": {
+          "new": -10,
+          "intermediate": 0,
+          "advanced": 10
+        },
+        "weeklyIncrease": 5,
+        "capByExperience": {
+          "new": 120,
+          "intermediate": 150,
+          "advanced": 150
+        },
+        "mpSegments": {
+          "h_8_10": ["3x2k", "3x3k", "3x4k"],
+          "h_10_12": ["4x2k", "4x3k", "4x4k", "4x5k"]
+        },
+        "mpEveryWeeks": 2
+      },
+      "qualityByPhase": {
+        "base": { "q1": "steady_marathon", "q2": "speed" },
+        "build": { "q1": "threshold_marathon", "q2": "steady_marathon" },
+        "specificity": { "q1": "threshold_marathon", "q2": "steady_marathon" },
+        "taper": { "q1": "steady_marathon", "q2": "speed" }
+      },
+      "qualityByPhaseNew": {
+        "base": { "q1": "easy", "q2": "speed" },
+        "build": { "q1": "steady_marathon", "q2": "easy" },
+        "specificity": { "q1": "steady_marathon", "q2": "easy" },
+        "taper": { "q1": "steady_marathon", "q2": "speed" }
+      }
+    }
+  }
+}

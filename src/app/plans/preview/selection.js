@@ -9,6 +9,7 @@ import {
 	getGoalByPlanId,
 	getGoalBySlug,
 } from '@/data/freePlanGoals';
+import goalProfilesData from '@/data/plans/goalProfiles.json';
 
 const HOURS_DEFAULT_VALUE = HOUR_WINDOWS[1]?.value || HOUR_WINDOWS[0]?.value;
 const HOURS_VALUE_TO_BUCKET = HOUR_WINDOWS.reduce((acc, option) => {
@@ -31,6 +32,8 @@ const STRUCTURE_VALUE_TO_ID = {
 	s_2quality_long: 's_2quality_long',
 	consistency: 's_lowfreq_consistency',
 	s_lowfreq_consistency: 's_lowfreq_consistency',
+	highfreq_ironman: 's_highfreq_ironman',
+	s_highfreq_ironman: 's_highfreq_ironman',
 };
 const STRUCTURE_LABEL_BY_ID = WEEK_STRUCTURES.reduce((acc, option) => {
 	const id = STRUCTURE_VALUE_TO_ID[option.value] || option.value;
@@ -63,6 +66,27 @@ function normalizeStructure(value) {
 		STRUCTURE_VALUE_TO_ID[STRUCTURE_DEFAULT_VALUE] || 's_3key_2easy';
 	if (!value) return fallback;
 	return STRUCTURE_VALUE_TO_ID[value] || fallback;
+}
+
+function guardStructureForGoal(goalId, structureId) {
+	const goalProfile = goalProfilesData?.profiles?.[goalId];
+	const allowed = goalProfile?.constraints?.allowedStructures;
+	if (!allowed?.length) return structureId;
+	if (allowed.includes(structureId)) return structureId;
+	return allowed[0];
+}
+
+function bucketIndex(bucketId) {
+	const order = ['h_4_6', 'h_6_8', 'h_8_10', 'h_10_12'];
+	return order.indexOf(bucketId);
+}
+
+function guardHoursForStructure(goalId, structureId, hoursBucketId) {
+	const goalProfile = goalProfilesData?.profiles?.[goalId];
+	const hoursCap = goalProfile?.constraints?.hoursCapByStructure?.[structureId];
+	if (!hoursCap) return hoursBucketId;
+	if (bucketIndex(hoursBucketId) <= bucketIndex(hoursCap)) return hoursBucketId;
+	return hoursCap;
 }
 
 function normalizeExperience(value) {
@@ -107,10 +131,19 @@ export function buildSelectionModel(rawParams = {}) {
 	const shiftValue = firstValue(rawParams.shiftMode);
 
 	const experienceOption = normalizeExperience(experienceValue);
+	const normalizedStructure = guardStructureForGoal(
+		goalMeta.planId,
+		normalizeStructure(structureValue)
+	);
+	const normalizedHours = guardHoursForStructure(
+		goalMeta.planId,
+		normalizedStructure,
+		normalizeHours(hoursValue)
+	);
 	const normalized = {
 		goal: goalMeta.planId,
-		hoursBucketId: normalizeHours(hoursValue),
-		structureId: normalizeStructure(structureValue),
+		hoursBucketId: normalizedHours,
+		structureId: normalizedStructure,
 		experience: experienceOption.value,
 		blockWeeks: normalizeBlockLength(blockValue),
 		shiftMode: normalizeShiftMode(shiftValue),

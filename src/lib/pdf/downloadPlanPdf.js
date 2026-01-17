@@ -27,13 +27,28 @@ export function downloadPlanPdf(plan) {
 		doc.text(`Week ${w.week}${w.isDeload ? ' (Deload)' : ''}`, 40, y);
 		y += 10;
 
-		const rows = (w.days || []).map((d) => [
-			d.day,
-			(d.workout?.sport || '').toUpperCase(),
-			d.workout?.title || '',
-			`${d.workout?.minutes || ''} min`,
-			d.workout?.intensity || '',
-		]);
+		const rows = [];
+		for (const day of w.days || []) {
+			const sessions = Array.isArray(day.sessions)
+				? day.sessions
+				: day.workout
+					? [{ ...day.workout, timeOfDay: day.timeOfDay || '' }]
+					: [];
+			sessions.forEach((session, idx) => {
+				const minutes =
+					session.minutes == null ? '' : `${session.minutes} min`;
+				const label = session.timeOfDay
+					? `${session.timeOfDay.toUpperCase()} ${session.title}`
+					: session.title || '';
+				rows.push([
+					idx === 0 ? day.day : '',
+					(session.sport || '').toUpperCase(),
+					label,
+					minutes,
+					session.intensity || '',
+				]);
+			});
+		}
 
 		autoTable(doc, {
 			startY: y + 6,
